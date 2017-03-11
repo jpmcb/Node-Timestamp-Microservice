@@ -1,12 +1,25 @@
-var express = require('express');
-var app = express();
+var http = require('http');
+var fs = require('fs');
+var path = require('path');
 
-app.get('/', function(req, res) {
-    res.send('Hello World!');
-});
+var server = http.createServer(function(req, res) {
 
-app.listen(3000, function(){
-    var display = new Date;
+    console.log(req.url);
     
-    console.log(display);
+    if(req.url === '/') {
+        
+        res.writeHead(200, {'Content-Type': 'text/html'});
+        res.end('Hello world!');
+        
+    } else {
+        
+        res.writeHead(200, {'content-Type': 'text/html'});
+        res.end(`{ ${req.url} }`);
+        
+    }
+    
 });
+
+server.listen(process.env.PORT || 3000);
+
+console.log('Listening on port 3000');
